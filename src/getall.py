@@ -26,6 +26,10 @@ def get_recent_cves():
             recent_cves.append(vulnerability)  # Додає вразливість до списку recent_cves
         if len(recent_cves) == max_cves:  # Перевіряє, чи досягнуто максимальну кількість CVE
             break
-  
+    for cve in recent_cves:
+        client.index(
+            index="filtered_getall_cves",  # Ім'я нового індексу
+            document=cve  # Збереження кожного CVE як окремий документ
+        )  
 
     return recent_cves  # Повертає список нещодавніх CVE.

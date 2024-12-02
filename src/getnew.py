@@ -25,5 +25,9 @@ def getnew10():
             "Name": document["vulnerabilities"][i]["vulnerabilityName"],
             "Date Added": document["vulnerabilities"][i]["dateAdded"]
         })
-    
+    for cve in results:
+        client.index(
+            index="filtered_getnew_cves",  # Ім'я нового індексу
+            document=cve  # Збереження кожного CVE як окремий документ
+        )  
     return results #Повертає список з 10 нових CVE
