@@ -14,13 +14,12 @@ def getcritical():
         body={
             "query": {
                 "match_all": {}
-            },
-            "size": 1  # Limit to the first document
+            }
         }
     ) 
     cves_found = [] #  порожній список для збереження знайдених CVE 
-    if response["hits"]["hits"]:
-        document = response["hits"]["hits"][0]["_source"]
+    if response["hits"]["hits"]: # Перевірка, чи є документ у результаті
+        document = response["hits"]["hits"][0]["_source"] # Отримання першого документа з результату і доступ до вмісту через сорс
     for i in range(len(document["vulnerabilities"])):  # Ітерує через індекси списку вразливостей у JSON-даних.
         if document["vulnerabilities"][i]["knownRansomwareCampaignUse"] == 'Known':  
             # Перевіряє, чи значення поля 'knownRansomwareCampaignUse' дорівнює Known

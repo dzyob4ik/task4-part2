@@ -1,10 +1,7 @@
-
 from fastapi import APIRouter# Імпортує APIRouter для створення маршрутизатора в FastAPI
 from elasticsearch import Elasticsearch
 
-
 router = APIRouter(tags=['10NEW CVEs'])
-
 @router.get("/get/new")
 def getnew10():
     client = Elasticsearch(
@@ -16,12 +13,11 @@ def getnew10():
         body={
             "query": {
                 "match_all": {}
-            },
-            "size": 1  # Limit to the first document
+            }
         }
-    ) 
-    if response["hits"]["hits"]:
-        document = response["hits"]["hits"][0]["_source"]
+    )  
+    if response["hits"]["hits"]: # Перевірка, чи є документ у результаті
+        document = response["hits"]["hits"][0]["_source"] # Отримання першого документа з результату і доступ до вмісту через сорс
     results = [] #  порожній список для збереження знайдених CVE 
     for i in range(10): # Ітерує через перші 10 найновіших вразливостей у списку
         results.append({ # Додає до списку results словник з даними про CVE

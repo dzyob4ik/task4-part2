@@ -10,20 +10,18 @@ def get_recent_cves():
     api_key="cjZqSWg1TUJBSG9VaG1uemhiZkE6aUZOQ3p0eFhTUnUzUXNWTWVJdTlwQQ==")
     # Визначає шлях до JSON-файлу з відомими вразливостями
     response = client.search(
-        index="test_1",
+        index="test_1", #Ім'я індексу в Elasticsearch
         body={
             "query": {
-                "match_all": {}
-            },
-            "size": 1  # Limit to the first document
+                "match_all": {} #повертає всі документи з індексу,для подальшої фільтрації
+            }
         }
     )
-    
-    recent_cves = []
+    recent_cves = [] #потім для заповнення
     max_cves = 40  # Визначає максимальну кількість CVE, які потрібно повернути
-    recent_dates = ["2024-11-21", "2024-11-20", "2024-11-19", "2024-11-18", "2024-11-17"] 
-    if response["hits"]["hits"]:
-        document = response["hits"]["hits"][0]["_source"]
+    recent_dates = ["2024-11-21", "2024-11-20", "2024-11-19", "2024-11-18", "2024-11-17"]  #для фільтрації
+    if response["hits"]["hits"]: # Перевірка, чи є документ у результаті
+        document = response["hits"]["hits"][0]["_source"] # Отримання першого документа з результату і доступ до вмісту через сорс
     for vulnerability in document['vulnerabilities']:  # Ітерує через список вразливостей у JSON-даних.
         if vulnerability['dateAdded'] in recent_dates:  # Перевіряє, чи дата додавання вразливості є в списку нещодавніх дат
             recent_cves.append(vulnerability)  # Додає вразливість до списку recent_cves

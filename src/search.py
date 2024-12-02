@@ -14,12 +14,11 @@ def search_by_key(query: str = Query(description="Keyword to search for in vulne
         body={
             "query": {
                 "match_all": {}
-            },
-            "size": 1  # Limit to the first document
+            }
         }
     ) 
-    if response["hits"]["hits"]:
-        document = response["hits"]["hits"][0]["_source"]
+    if response["hits"]["hits"]: # Перевірка, чи є документ у результаті
+        document = response["hits"]["hits"][0]["_source"] # Отримання першого документа з результату і доступ до вмісту через сорс
     filtered_vulnerabilities = []  # порожній список для збереження знайдених вразливостей
     for vulnerability in document["vulnerabilities"]:  # Ітерує через кожну вразливість у списку
         if query.lower() in json.dumps(vulnerability).lower():  # Перевіряє, чи ключове слово query є у вразливості (case-insensitive)
