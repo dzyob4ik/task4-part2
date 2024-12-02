@@ -1,14 +1,13 @@
 from fastapi import APIRouter  # Імпортує APIRouter для створення маршрутизатора в FastAPI
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch #імпортує еластік
 
-router = APIRouter(tags=['Last CVEs in 5 days'])  # Створює об'єкт маршрутизатора з тегом для групування маршрутів у документації FastAPI
+router = APIRouter(tags=['Last CVEs in 5 days'])  # Створює об'єкт маршрутизатора з тегом для  маршрутів у документації FastAPI
 
 @router.get("/get/all")  
 def get_recent_cves():  
     client = Elasticsearch(
     "https://1bb469e994bb4ab59fc129b1b8f6eb34.us-central1.gcp.cloud.es.io:443",
     api_key="cjZqSWg1TUJBSG9VaG1uemhiZkE6aUZOQ3p0eFhTUnUzUXNWTWVJdTlwQQ==")
-    # Визначає шлях до JSON-файлу з відомими вразливостями
     response = client.search(
         index="test_1", #Ім'я індексу в Elasticsearch
         body={

@@ -1,5 +1,6 @@
-from fastapi import APIRouter# Імпортує APIRouter для створення маршрутизатора в FastAPI
-from elasticsearch import Elasticsearch
+from fastapi import APIRouter  # Імпортує APIRouter для створення маршрутизатора в FastAPI
+from elasticsearch import Elasticsearch #імпортує еластік
+
 
 router = APIRouter(tags=['10NEW CVEs'])
 @router.get("/get/new")
@@ -7,12 +8,11 @@ def getnew10():
     client = Elasticsearch(
     "https://1bb469e994bb4ab59fc129b1b8f6eb34.us-central1.gcp.cloud.es.io:443",
     api_key="cjZqSWg1TUJBSG9VaG1uemhiZkE6aUZOQ3p0eFhTUnUzUXNWTWVJdTlwQQ==")
-    # Визначає шлях до JSON-файлу з відомими вразливостями
     response = client.search(
-        index="test_1",
+        index="test_1", #Ім'я індексу в Elasticsearch
         body={
             "query": {
-                "match_all": {}
+                "match_all": {} #повертає всі документи з індексу,для подальшої фільтрації
             }
         }
     )  
